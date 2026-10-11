@@ -1,0 +1,892 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6d4aff">
+  <meta name="description" content="SuccessWrites helps you plan, write, edit and improve academic, professional and creative content.">
+  <title>SuccessWrites — Write Smarter. Finish Faster.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6d4aff;
+      --primary-dark: #5030db;
+      --purple-light: #eee9ff;
+      --ink: #19162b;
+      --muted: #706d80;
+      --line: #ece9f4;
+      --surface: #ffffff;
+      --background: #faf9ff;
+      --radius: 20px;
+      --shadow: 0 16px 45px rgba(46, 31, 94, .09);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--ink);
+      background: var(--surface);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .brand {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      line-height: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { cursor: pointer; }
+    section { padding: 92px 0; }
+    .container { width: min(1160px, 90%); margin: auto; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple-light);
+      color: var(--primary-dark);
+      padding: 8px 13px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .section-heading { max-width: 650px; margin-bottom: 42px; }
+    .section-heading.center { text-align: center; margin-inline: auto; }
+    .section-heading h2 { font-size: clamp(29px, 4vw, 43px); letter-spacing: -1.6px; margin: 17px 0; }
+    .section-heading p { color: var(--muted); font-size: 16px; }
+
+    .gradient-text {
+      color: var(--primary);
+      background: linear-gradient(110deg, #6d4aff, #aa60e9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 13px 21px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .btn-primary { color: white; background: var(--primary); box-shadow: 0 8px 20px #6d4aff30; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .btn-secondary { background: white; border-color: var(--line); color: var(--ink); }
+    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-light { background: white; color: var(--primary-dark); }
+    .btn-light:hover { transform: translateY(-2px); }
+    .btn-block { width: 100%; }
+
+    /* Navigation */
+    .navbar {
+      position: sticky;
+      z-index: 100;
+      top: 0;
+      background: #ffffffed;
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid #efedf6;
+    }
+
+    .nav-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 21px; font-weight: 800; letter-spacing: -.8px; }
+    .brand-icon {
+      width: 38px; height: 38px; border-radius: 12px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, #7858ff, #9e5de8);
+      color: white; font-size: 21px;
+      box-shadow: 0 6px 14px #6d4aff35;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a:not(.btn) { font-size: 13px; color: #555166; font-weight: 600; }
+    .nav-links a:not(.btn):hover { color: var(--primary); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .login-link { font-size: 13px; font-weight: 700; }
+    .menu-toggle { display: none; background: white; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; font-size: 20px; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      padding: 82px 0 78px;
+      background:
+        radial-gradient(ellipse at 7% 15%, #e9e1ff 0%, transparent 34%),
+        radial-gradient(ellipse at 95% 45%, #f2e7ff 0%, transparent 30%),
+        linear-gradient(180deg, #fcfbff, #fff);
+      overflow: hidden;
+    }
+
+    .hero-grid { display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 58px; }
+    .hero h1 { font-size: clamp(42px, 5.3vw, 65px); letter-spacing: -3.2px; margin: 22px 0; line-height: 1.08; }
+    .hero-copy > p { color: var(--muted); font-size: 17px; max-width: 510px; line-height: 1.8; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 20px; }
+    .small-note { font-size: 12px; color: var(--muted); }
+    .small-note span { color: #29966b; font-weight: 700; }
+
+    .hero-visual { position: relative; min-width: 0; }
+    .editor-window {
+      background: white;
+      border: 1px solid #ece7fa;
+      border-radius: 22px;
+      box-shadow: 0 28px 80px #4330791c;
+      padding: 21px;
+      transform: rotate(1deg);
+    }
+
+    .window-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 17px; border-bottom: 1px solid var(--line); }
+    .window-dots { display: flex; gap: 5px; }
+    .window-dots i { display: block; width: 8px; height: 8px; border-radius: 50%; background: #e4dff0; }
+    .window-label { font-size: 12px; font-weight: 700; }
+    .live-tag { font-size: 10px; color: #24986b; background: #e7f8ef; border-radius: 20px; padding: 5px 9px; font-weight: 700; }
+    .editor-content { padding: 24px 4px 8px; }
+    .editor-content h3 { font-size: 20px; margin-bottom: 14px; }
+    .fake-line { height: 8px; background: #eeebf5; border-radius: 10px; margin: 10px 0; }
+    .fake-line.purple { background: #d8cdff; }
+    .w-95 { width: 95%; } .w-90 { width: 90%; } .w-80 { width: 80%; } .w-70 { width: 70%; } .w-60 { width: 60%; } .w-45 { width: 45%; }
+    .editor-tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 23px; }
+    .editor-tag { border: 1px solid #eee9fb; border-radius: 8px; padding: 7px 10px; font-size: 10px; color: #63578b; background: #fbfaff; }
+    .floating-note {
+      position: absolute; right: -20px; bottom: 22px;
+      background: white; border: 1px solid var(--line); border-radius: 14px;
+      padding: 13px 16px; box-shadow: var(--shadow); font-size: 12px;
+    }
+    .floating-note strong { display: block; font-size: 14px; margin-bottom: 2px; }
+    .floating-note span { color: #29966b; }
+
+    .trust-strip { padding: 24px 0; border-top: 1px solid #f0edf8; border-bottom: 1px solid #f0edf8; }
+    .trust-inner { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px 34px; text-align: center; }
+    .trust-inner p { color: var(--muted); font-size: 12px; }
+    .trust-item { color: #5c5770; font-size: 13px; font-weight: 700; }
+    .trust-item span { color: var(--primary); margin-right: 5px; }
+
+    /* Cards */
+    .features-section { background: #fff; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feature-card { padding: 27px; border: 1px solid var(--line); border-radius: var(--radius); background: white; transition: .25s; }
+    .feature-card:hover { transform: translateY(-5px); border-color: #d8ceff; box-shadow: var(--shadow); }
+    .feature-icon { width: 49px; height: 49px; display: grid; place-items: center; border-radius: 14px; background: var(--purple-light); color: var(--primary-dark); font-size: 23px; margin-bottom: 21px; }
+    .feature-card h3 { font-size: 17px; margin-bottom: 10px; }
+    .feature-card p { color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .feature-card a { display: inline-block; margin-top: 18px; color: var(--primary); font-size: 13px; font-weight: 700; }
+
+    /* Writing demo */
+    .demo-section { background: var(--background); }
+    .demo-grid { display: grid; grid-template-columns: .85fr 1.15fr; align-items: start; gap: 55px; }
+    .demo-copy h2 { font-size: clamp(30px, 4vw, 43px); letter-spacing: -1.5px; margin: 19px 0; }
+    .demo-copy > p { color: var(--muted); }
+    .benefit-list { list-style: none; margin-top: 25px; display: grid; gap: 14px; }
+    .benefit-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+    .check { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: #e3f8ed; color: #21885b; font-size: 12px; flex-shrink: 0; }
+
+    .demo-card { border: 1px solid #eae5f7; background: white; border-radius: 22px; padding: 26px; box-shadow: var(--shadow); }
+    .demo-card h3 { font-size: 18px; margin-bottom: 6px; }
+    .demo-card > p { color: var(--muted); font-size: 12px; margin-bottom: 22px; }
+    .field-label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+    .form-control { width: 100%; border: 1px solid #e5e1ef; border-radius: 11px; padding: 12px 13px; background: white; outline: none; color: var(--ink); }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px #6d4aff15; }
+    textarea.form-control { min-height: 105px; resize: vertical; }
+    .form-group { margin-bottom: 17px; }
+    .demo-output { display: none; margin-top: 20px; padding: 18px; border-radius: 12px; background: #f8f6ff; border: 1px solid #ebe5ff; }
+    .demo-output.show { display: block; }
+    .demo-output h4 { font-size: 13px; margin-bottom: 9px; }
+    .demo-output p { color: #59536c; font-size: 13px; white-space: pre-wrap; line-height: 1.8; }
+    .demo-output button { margin-top: 12px; border: 0; color: var(--primary); background: transparent; font-size: 12px; font-weight: 700; }
+
+    /* Process */
+    .process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .process-step { padding: 10px; }
+    .step-number { width: 43px; height: 43px; display: grid; place-items: center; border-radius: 13px; background: var(--primary); color: white; font-weight: 800; margin-bottom: 20px; }
+    .process-step h3 { font-size: 18px; margin-bottom: 10px; }
+    .process-step p { font-size: 14px; color: var(--muted); }
+
+    /* Pricing */
+    .pricing-section { background: var(--background); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+    .price-card { padding: 29px; border: 1px solid var(--line); background: white; border-radius: 20px; display: flex; flex-direction: column; }
+    .price-card.popular { border: 2px solid var(--primary); box-shadow: var(--shadow); position: relative; }
+    .popular-label { display: inline-block; align-self: flex-start; background: var(--purple-light); color: var(--primary-dark); border-radius: 20px; font-size: 10px; font-weight: 800; padding: 6px 10px; margin-bottom: 15px; }
+    .price-card h3 { font-size: 18px; }
+    .price-description { color: var(--muted); font-size: 13px; margin: 10px 0 22px; }
+    .price { font-size: 31px; font-weight: 800; letter-spacing: -1px; font-family: "Plus Jakarta Sans", sans-serif; }
+    .price small { font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+    .price-features { list-style: none; display: grid; gap: 13px; margin: 24px 0 28px; flex: 1; }
+    .price-features li { display: flex; gap: 9px; font-size: 13px; color: #555166; }
+    .price-features li span { color: #26986a; font-weight: 800; }
+
+    /* FAQ */
+    .faq-list { max-width: 800px; margin: auto; }
+    .faq-item { border-bottom: 1px solid var(--line); }
+    .faq-question { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: 100%; border: 0; background: transparent; text-align: left; padding: 22px 0; font-weight: 700; color: var(--ink); }
+    .faq-question span:last-child { color: var(--primary); font-size: 22px; }
+    .faq-answer { display: none; color: var(--muted); font-size: 14px; padding: 0 25px 20px 0; }
+    .faq-item.active .faq-answer { display: block; }
+    .faq-item.active .faq-question span:last-child { transform: rotate(45deg); }
+
+    /* Contact */
+    .contact-section { background: white; }
+    .contact-card { display: grid; grid-template-columns: .9fr 1.1fr; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--line); }
+    .contact-copy { padding: 40px; color: white; background: linear-gradient(145deg, #6140ed, #8c55e9); }
+    .contact-copy h2 { font-size: 32px; margin: 17px 0; letter-spacing: -1px; }
+    .contact-copy p { font-size: 14px; color: #f0eaff; }
+    .contact-detail { margin-top: 25px; font-size: 13px; }
+    .contact-form { padding: 35px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .form-status { font-size: 13px; color: #21885b; margin-top: 12px; }
+
+    /* CTA + footer */
+    .cta-section { padding: 60px 0; }
+    .cta-panel { padding: 55px 30px; border-radius: 24px; background: linear-gradient(120deg, #6846f5, #9759e8); text-align: center; color: white; }
+    .cta-panel h2 { font-size: clamp(28px, 4vw, 42px); letter-spacing: -1.5px; margin-bottom: 14px; }
+    .cta-panel p { color: #f0eaff; margin-bottom: 24px; font-size: 15px; }
+
+    footer { background: #19152b; color: white; padding: 55px 0 25px; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 35px; padding-bottom: 40px; }
+    .footer-brand p { color: #b6b0c8; max-width: 280px; font-size: 13px; margin-top: 15px; }
+    .footer-column h4 { font-size: 13px; margin-bottom: 17px; }
+    .footer-column a { display: block; color: #b6b0c8; font-size: 12px; margin: 12px 0; }
+    .footer-column a:hover { color: white; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid #373047; color: #aaa3be; font-size: 11px; }
+
+    @media (max-width: 950px) {
+      .nav-links { gap: 17px; }
+      .nav-links a:not(.btn) { font-size: 12px; }
+      .hero-grid { gap: 30px; }
+      .hero h1 { font-size: 49px; }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .demo-grid { gap: 30px; }
+      .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 720px) {
+      section { padding: 66px 0; }
+      .nav-inner { min-height: 68px; }
+      .brand { font-size: 19px; }
+      .menu-toggle { display: block; }
+      .nav-actions .login-link { display: none; }
+      .nav-actions > .btn { padding: 10px 13px; font-size: 12px; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0;
+        background: white; border-bottom: 1px solid var(--line);
+        padding: 20px 5%; align-items: stretch; flex-direction: column; gap: 18px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a:not(.btn) { font-size: 14px; }
+      .hero { padding: 58px 0; }
+      .hero-grid, .demo-grid, .contact-card { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(41px, 10vw, 56px); letter-spacing: -2.5px; }
+      .hero-copy > p { font-size: 15px; }
+      .hero-visual { margin: 15px 5px 0; }
+      .floating-note { right: -8px; bottom: 12px; }
+      .trust-inner { gap: 13px 22px; }
+      .feature-grid, .process-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .feature-card { padding: 24px; }
+      .process-grid { gap: 25px; }
+      .demo-card { padding: 21px; }
+      .price-card { padding: 25px; }
+      .contact-copy, .contact-form { padding: 28px 23px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .cta-panel { padding: 40px 23px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVIGATION -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="SuccessWrites home">
+        <span class="brand-icon">✍</span>
+        <span>Success<span class="gradient-text">Writes</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#contact" class="login-link">Log in</a>
+        <a href="#writing-demo" class="btn btn-primary">Get Started ↗</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">✦ Your ideas, made clearer</span>
+          <h1>Write smarter.<br>Finish faster.<br><span class="gradient-text">Stand out.</span></h1>
+          <p>
+            From academic projects to professional documents and creative content,
+            SuccessWrites helps you turn your ideas into writing you can be proud of.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#writing-demo" class="btn btn-primary">Start Writing <span>→</span></a>
+            <a href="#services" class="btn btn-secondary">Explore Services</a>
+          </div>
+
+          <p class="small-note"><span>✓</span> Plan, write, edit and improve — all in one place.</p>
+        </div>
+
+        <div class="hero-visual" aria-label="Illustration of a writing workspace">
+          <div class="editor-window">
+            <div class="window-top">
+              <div class="window-dots"><i></i><i></i><i></i></div>
+              <span class="window-label">Your writing workspace</span>
+              <span class="live-tag">READY TO WRITE</span>
+            </div>
+
+            <div class="editor-content">
+              <span class="eyebrow">DOCUMENT PREVIEW</span>
+              <h3>Your next great idea starts here.</h3>
+              <div class="fake-line purple w-70"></div>
+              <div class="fake-line w-95"></div>
+              <div class="fake-line w-90"></div>
+              <div class="fake-line w-80"></div>
+              <br>
+              <div class="fake-line purple w-45"></div>
+              <div class="fake-line w-95"></div>
+              <div class="fake-line w-90"></div>
+              <div class="fake-line w-60"></div>
+
+              <div class="editor-tag-row">
+                <span class="editor-tag">✦ AI writing</span>
+                <span class="editor-tag">✓ Editing</span>
+                <span class="editor-tag">▤ Templates</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-note">
+            <strong>Better writing starts with you.</strong>
+            <span>✦ Your ideas. Your voice. Your progress.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <div class="trust-strip">
+      <div class="container trust-inner">
+        <p>One workspace for different writing needs</p>
+        <span class="trust-item"><span>✦</span> Academic</span>
+        <span class="trust-item"><span>✦</span> Professional</span>
+        <span class="trust-item"><span>✦</span> Creative</span>
+        <span class="trust-item"><span>✦</span> Digital Content</span>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section class="features-section" id="services">
+      <div class="container">
+        <div class="section-heading center">
+          <span class="eyebrow">Everything you need to write</span>
+          <h2>Meet your new <span class="gradient-text">writing partner.</span></h2>
+          <p>Whether you're starting with a blank page or polishing a finished draft, find tools designed to help you move forward.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">✦</div>
+            <h3>AI Writing Assistant</h3>
+            <p>Develop ideas, create outlines, draft content and get past the blank-page problem.</p>
+            <a href="#writing-demo">Try the writing demo →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>Academic Writing</h3>
+            <p>Organise assignments, research proposals, project chapters, literature reviews and study notes.</p>
+            <a href="#writing-demo">Explore writing support →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">✓</div>
+            <h3>Editing & Proofreading</h3>
+            <p>Improve grammar, sentence clarity, readability and the overall flow of your writing.</p>
+            <a href="#writing-demo">Improve a draft →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⌘</div>
+            <h3>Content & Script Writing</h3>
+            <p>Build blog ideas, social media posts, video scripts, presentations and engaging stories.</p>
+            <a href="#writing-demo">Develop an idea →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">▤</div>
+            <h3>Ready-Made Templates</h3>
+            <p>Get a head start with structured formats for professional, academic and everyday writing.</p>
+            <a href="#contact">Ask about templates →</a>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">✎</div>
+            <h3>CV & Professional Documents</h3>
+            <p>Prepare clearer CVs, cover letters, business proposals, reports and professional emails.</p>
+            <a href="#writing-demo">Start a document →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WRITING DEMO -->
+    <section class="demo-section" id="writing-demo">
+      <div class="container demo-grid">
+        <div class="demo-copy">
+          <span class="eyebrow">Your ideas, one step further</span>
+          <h2>From a rough idea to a <span class="gradient-text">clear direction.</span></h2>
+          <p>
+            Tell us what you're working on and choose a writing task.
+            This interactive preview demonstrates how a SuccessWrites writing assistant could help you get started.
+          </p>
+
+          <ul class="benefit-list">
+            <li><span class="check">✓</span> Get help organising your thoughts</li>
+            <li><span class="check">✓</span> Find a starting point for your draft</li>
+            <li><span class="check">✓</span> Keep developing the work in your own voice</li>
+          </ul>
+        </div>
+
+        <div class="demo-card">
+          <h3>Writing Assistant Preview</h3>
+          <p>This is a local demo using sample responses, not a live AI connection.</p>
+
+          <form id="demoForm">
+            <div class="form-group">
+              <label class="field-label" for="writingType">What are you writing?</label>
+              <select class="form-control" id="writingType">
+                <option value="academic">Academic assignment or project</option>
+                <option value="blog">Blog post or article</option>
+                <option value="script">Video script</option>
+                <option value="professional">Professional document</option>
+                <option value="ideas">Brainstorming ideas</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="field-label" for="writingPrompt">Describe your idea</label>
+              <textarea class="form-control" id="writingPrompt" required maxlength="1500" placeholder="For example: I want to write about the role of technology in education..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Generate a Starting Point ✦</button>
+          </form>
+
+          <div class="demo-output" id="demoOutput" aria-live="polite">
+            <h4 id="outputTitle">Your starting point</h4>
+            <p id="outputText"></p>
+            <button type="button" id="copyOutput">Copy this text ↗</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-heading center">
+          <span class="eyebrow">A simpler writing process</span>
+          <h2>Three steps to <span class="gradient-text">get moving.</span></h2>
+          <p>Good writing doesn't always begin with the perfect sentence. It begins with a clear next step.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-step">
+            <div class="step-number">01</div>
+            <h3>Bring your idea</h3>
+            <p>Start with a topic, a rough draft, a question or even a few scattered thoughts.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="step-number">02</div>
+            <h3>Choose your approach</h3>
+            <p>Decide whether you need an outline, a draft, editing support or a more professional tone.</p>
+          </article>
+
+          <article class="process-step">
+            <div class="step-number">03</div>
+            <h3>Refine your work</h3>
+            <p>Review, revise and personalise the result until it meets your purpose and standards.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing-section" id="pricing">
+      <div class="container">
+        <div class="section-heading center">
+          <span class="eyebrow">Flexible plans</span>
+          <h2>Writing support that fits <span class="gradient-text">your journey.</span></h2>
+          <p>These are proposed plan structures for the website preview. Prices and paid features have not been configured yet.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card">
+            <h3>Free</h3>
+            <p class="price-description">For exploring your ideas and getting started.</p>
+            <div class="price">₦0 <small>/ forever</small></div>
+            <ul class="price-features">
+              <li><span>✓</span> Access to the website</li>
+              <li><span>✓</span> Sample writing demo</li>
+              <li><span>✓</span> Selected free resources</li>
+              <li><span>✓</span> Basic writing guidance</li>
+            </ul>
+            <a href="#writing-demo" class="btn btn-secondary btn-block">Explore for Free</a>
+          </article>
+
+          <article class="price-card popular">
+            <span class="popular-label">PROPOSED PLAN</span>
+            <h3>Starter</h3>
+            <p class="price-description">For students and individuals with regular writing needs.</p>
+            <div class="price">Coming soon</div>
+            <ul class="price-features">
+              <li><span>✓</span> Expanded writing assistance</li>
+              <li><span>✓</span> Editing and rewriting tools</li>
+              <li><span>✓</span> Document templates</li>
+              <li><span>✓</span> Personal document workspace</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary btn-block">Register Your Interest</a>
+          </article>
+
+          <article class="price-card">
+            <h3>Professional</h3>
+            <p class="price-description">For creators, researchers and frequent writers.</p>
+            <div class="price">Coming soon</div>
+            <ul class="price-features">
+              <li><span>✓</span> Advanced writing workflow</li>
+              <li><span>✓</span> Professional document support</li>
+              <li><span>✓</span> Expanded template library</li>
+              <li><span>✓</span> More productivity features</li>
+            </ul>
+            <a href="#contact" class="btn btn-secondary btn-block">Register Your Interest</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-heading center">
+          <span class="eyebrow">Frequently asked questions</span>
+          <h2>Questions? <span class="gradient-text">Let's clarify.</span></h2>
+          <p>A few things to know about SuccessWrites as we build out the platform.</p>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>What is SuccessWrites?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              SuccessWrites is being designed as an all-in-one writing platform for academic work, professional documents, digital content and creative projects.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I use it for academic projects?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              Yes, academic writing support is one of the intended uses. Users should verify sources, follow their institution's rules and ensure submitted work reflects their own understanding.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Does the AI writing tool work already?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              Not yet. The writing assistant on this page is a front-end demonstration with sample outputs. A real AI service still needs to be connected securely through a backend.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>Can I save and download my documents?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              Document accounts, cloud saving and PDF or Word downloads are planned features. They are not enabled in this homepage version.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <span>How much does SuccessWrites cost?</span><span>+</span>
+            </button>
+            <div class="faq-answer">
+              The Free, Starter and Professional options shown above are proposed plans. Paid prices and payment processing will be finalised when the platform's features and operating costs are established.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-copy">
+            <span class="eyebrow" style="background:#ffffff20;color:white;">Let's connect</span>
+            <h2>Have an idea for SuccessWrites?</h2>
+            <p>Tell us what you would like to write or which features would make your writing process easier.</p>
+            <div class="contact-detail">✦ Academic and professional writing</div>
+            <div class="contact-detail">✦ Product questions and suggestions</div>
+            <div class="contact-detail">✦ Feature requests and feedback</div>
+          </div>
+
+          <div class="contact-form">
+            <form id="contactForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="field-label" for="contactName">Your name</label>
+                  <input class="form-control" id="contactName" required maxlength="100" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                  <label class="field-label" for="contactEmail">Email address</label>
+                  <input class="form-control" id="contactEmail" type="email" required maxlength="150" placeholder="you@example.com">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="field-label" for="contactSubject">What is this about?</label>
+                <select class="form-control" id="contactSubject">
+                  <option>General enquiry</option>
+                  <option>Feature suggestion</option>
+                  <option>Academic writing</option>
+                  <option>Professional writing</option>
+                  <option>Pricing and plans</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="field-label" for="contactMessage">Your message</label>
+                <textarea class="form-control" id="contactMessage" required maxlength="2000" placeholder="Tell us a little more..."></textarea>
+              </div>
+
+              <button class="btn btn-primary btn-block" type="submit">Prepare Message ↗</button>
+              <p class="form-status" id="contactStatus" aria-live="polite"></p>
+              <p class="small-note" style="margin-top:8px;">This preview does not send or store your message. It will prepare an email draft if your device supports it.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-panel">
+          <h2>Your next great piece starts here.</h2>
+          <p>Bring your ideas. Find your words. Make your work count.</p>
+          <a href="#writing-demo" class="btn btn-light">Try the Writing Demo →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="brand">
+            <span class="brand-icon">✍</span>
+            <span>Success<span style="color:#bbaaff;">Writes</span></span>
+          </a>
+          <p>A writing workspace for academic thinkers, professionals and creative minds.</p>
+        </div>
+
+        <div class="footer-column">
+          <h4>Explore</h4>
+          <a href="#home">Home</a>
+          <a href="#services">Services</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Writing Tools</h4>
+          <a href="#writing-demo">Writing Assistant Demo</a>
+          <a href="#services">Academic Writing</a>
+          <a href="#services">Editing & Proofreading</a>
+          <a href="#services">CV & Documents</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Support</h4>
+          <a href="#faq">FAQs</a>
+          <a href="#contact">Contact Us</a>
+          <a href="#contact">Send Feedback</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> SuccessWrites. All rights reserved.</span>
+        <span>Write Smarter. Finish Faster. Stand Out.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
+      menuToggle.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // Local writing demo: these are illustrative templates, not live AI.
+    const demoForm = document.getElementById("demoForm");
+    const demoOutput = document.getElementById("demoOutput");
+    const outputTitle = document.getElementById("outputTitle");
+    const outputText = document.getElementById("outputText");
+    const copyOutput = document.getElementById("copyOutput");
+
+    demoForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const type = document.getElementById("writingType").value;
+      const prompt = document.getElementById("writingPrompt").value.trim();
+
+      if (!prompt) return;
+
+      const templates = {
+        academic: {
+          title: "Suggested academic outline",
+          text: `Topic: ${prompt}\n\n1. Introduction\nIntroduce the topic, explain its background and establish the main question your work will address.\n\n2. Main discussion\n• Define the key concepts.\n• Discuss relevant arguments, evidence and existing research.\n• Organise your discussion into clear sections.\n• Support factual claims with reliable, verifiable sources.\n\n3. Conclusion\nSummarise the main findings and show how they address the original question.\n\nNext step: Narrow your topic, identify credible sources and confirm your institution's formatting requirements.`
+        },
+        blog: {
+          title: "Suggested blog structure",
+          text: `Working topic: ${prompt}\n\nHeadline: Choose a clear title that promises a useful answer or insight.\n\nOpening: Begin with a relatable question, a problem or a surprising observation.\n\nMain sections:\n1. Explain the issue and why it matters.\n2. Share practical insights or supporting examples.\n3. Offer useful steps, lessons or recommendations.\n\nConclusion: Reinforce the main message and give readers a meaningful next step.\n\nWriting tip: Keep paragraphs focused, use specific examples and verify factual claims.`
+        },
+        script: {
+          title: "Suggested video script outline",
+          text: `Video idea: ${prompt}\n\nHOOK — Open with a question, striking observation or relatable problem.\n\nINTRODUCTION — Tell viewers what the video will cover and why they should care.\n\nMAIN SECTION — Develop three key points. Give each point a clear explanation, example or short story.\n\nTRANSITIONS — Connect each section naturally so the video feels coherent.\n\nCLOSING — Summarise the main takeaway and invite viewers to take an appropriate next step.\n\nProduction tip: Read the script aloud and shorten sentences that sound unnatural.`
+        },
+        professional: {
+          title: "Suggested professional document plan",
+          text: `Purpose: ${prompt}\n\n1. Opening\nState the purpose of the document clearly and professionally.\n\n2. Background or context\nProvide the relevant facts and explain the issue, need or opportunity.\n\n3. Main content\nPresent your information in a logical order. Use specific details, evidence and clear recommendations where appropriate.\n\n4. Conclusion and next steps\nSummarise the key points and identify any required action, responsibility or deadline.\n\nFinal check: Confirm names, dates, figures, tone and intended audience before sending.`
+        },
+        ideas: {
+          title: "A framework for developing your idea",
+          text: `Your starting idea: ${prompt}\n\nExplore it from five angles:\n\n1. THE PROBLEM — What question, need or challenge does this idea address?\n\n2. THE AUDIENCE — Who would benefit from it, and what do they need to know?\n\n3. THE MAIN MESSAGE — What is the single most important point you want to communicate?\n\n4. THE SUPPORT — What examples, evidence, experiences or research could strengthen it?\n\n5. THE NEXT STEP — What is the smallest useful piece you can write first?\n\nTry writing one sentence for each point before drafting the full piece.`
+        }
+      };
+
+      const result = templates[type];
+      outputTitle.textContent = result.title;
+      outputText.textContent = result.text;
+      demoOutput.classList.add("show");
+      demoOutput.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    copyOutput.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(outputText.textContent);
+        copyOutput.textContent = "Copied ✓";
+      } catch {
+        const range = document.createRange();
+        range.selectNodeContents(outputText);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        copyOutput.textContent = "Select the text and copy it";
+      }
+
+      setTimeout(() => {
+        copyOutput.textContent = "Copy this text ↗";
+      }, 2200);
+    });
+
+    // FAQ accordion
+    document.querySelectorAll(".faq-question").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const willOpen = !item.classList.contains("active");
+
+        document.querySelectorAll(".faq-item").forEach(other => {
+          other.classList.remove("active");
+          other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+        });
+
+        if (willOpen) {
+          item.classList.add("active");
+          button.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+
+    // Contact form: prepares an email draft without claiming to send it.
+    document.getElementById("contactForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const subject = document.getElementById("contactSubject").value;
+      const message = document.getElementById("contactMessage").value.trim();
+      const status = document.getElementById("contactStatus");
+
+      const body = `Name: ${name}\nEmail: ${email}\nTopic: ${subject}\n\n${message}`;
+      const mailto = `mailto:?subject=${encodeURIComponent("SuccessWrites enquiry: " + subject)}&body=${encodeURIComponent(body)}`;
+
+      status.textContent = "Opening an email draft. No message has been sent yet.";
+      window.location.href = mailto;
+    });
+
+    // Automatic copyright year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
